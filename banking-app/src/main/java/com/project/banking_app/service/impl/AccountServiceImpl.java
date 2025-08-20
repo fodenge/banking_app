@@ -1,5 +1,7 @@
 package com.project.banking_app.service.impl;
 
+import javax.management.RuntimeErrorException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +23,7 @@ public class AccountServiceImpl implements AccountService {
         return AccountMapper.mapToAccountDto(savedAccount);
     }
 
+
     @Override
     public AccountDto getAccountByAccountNumber(Long accountNumber) {
         Account account = accountRepository
@@ -29,15 +32,29 @@ public class AccountServiceImpl implements AccountService {
         return AccountMapper.mapToAccountDto(account);
     }
     
-    
 
     @Override
-    public AccountDto depositAmount(Long account_number, double amount) {
+    public AccountDto depositAmount(Long accountNumber, double amount) {
         Account account = accountRepository
-                            .findById(account_number)
+                            .findById(accountNumber)
                             .orElseThrow(() -> new RuntimeException("Account doesn't exist."));
         
         double total = account.getBalance() + amount;
+        account.setBalance(total);
+        Account savedAccount = accountRepository.save(account);
+        return AccountMapper.mapToAccountDto(savedAccount);
+    }
+
+
+    @Override
+    public AccountDto withdrawAmount(Long accountNumber, double amount) {
+        Account account = accountRepository
+                            .findById(accountNumber)
+                            .orElseThrow(()-> new RuntimeException("Account doesn't exist."));
+        if(amount > account.getBalance()){
+            throw new RuntimeException("Insufficient Balance");
+        }
+        double total = account.getBalance() - amount;
         account.setBalance(total);
         Account savedAccount = accountRepository.save(account);
         return AccountMapper.mapToAccountDto(savedAccount);
