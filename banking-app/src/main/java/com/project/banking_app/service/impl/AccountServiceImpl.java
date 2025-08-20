@@ -1,5 +1,9 @@
 package com.project.banking_app.service.impl;
 
+import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
+
 import javax.management.RuntimeErrorException;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +17,10 @@ import com.project.banking_app.service.AccountService;
 
 @Service
 public class AccountServiceImpl implements AccountService {
+
     @Autowired
     private AccountRepository accountRepository;
+
 
     @Override
     public AccountDto createAccount(AccountDto accountDto) {
@@ -58,6 +64,16 @@ public class AccountServiceImpl implements AccountService {
         account.setBalance(total);
         Account savedAccount = accountRepository.save(account);
         return AccountMapper.mapToAccountDto(savedAccount);
+    }
+
+
+    @Override
+    public List<AccountDto> getAllAccounts() {
+       List<Account> accounts = accountRepository.findAll();
+       return accounts
+                .stream()
+                .map((account) -> AccountMapper.mapToAccountDto(account))
+                .collect(Collectors.toList());
     }
 
 }

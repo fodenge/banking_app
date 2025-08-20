@@ -1,5 +1,6 @@
 package com.project.banking_app.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,5 +51,12 @@ public class AccountController {
         double amount = request.get("amount");
         AccountDto accountDto = accountService.withdrawAmount(accountNumber, amount);
         return ResponseEntity.ok(accountDto);
+    }
+
+    //Get all accounts REST API
+    @GetMapping
+    public ResponseEntity<List<AccountDto>> getAllAccounts(){
+        List<AccountDto> accounts = accountService.getAllAccounts();
+        return ResponseEntity.ok(accounts);
     }
 }
