@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Transaction History</title>
+    <style>
+        table { width: 80%; margin: 20px auto; border-collapse: collapse; }
+        th, td { padding: 10px; border: 1px solid #ccc; text-align: center; }
+        th { background-color: #003366; color: white; }
+        tr:nth-child(even) { background-color: #f2f2f2; }
+
+        .credit { color: green; font-weight: bold; }
+        .debit { color: red; font-weight: bold; }
+    </style>
+</head>
+<body>
+<h2 style="text-align:center;">Transaction History</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th>Type</th>
+            <th>Account Number</th>
+            <th>Target Account Number</th>
+            <th>Amount</th>
+            <th>Timestamp</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="tx : ${transactions}">
+    <td th:text="${tx.type}"></td>
+    <td th:text="${tx.accountNumber}"></td>
+    <td th:text="${tx.targetAccountNumber}"></td>
+
+    <!-- Amount formatting with ₹ symbol and spacing -->
+    <td th:classappend="${tx.type == 'DEPOSIT'} ? 'credit' : 'debit'"
+        th:text="${tx.type == 'DEPOSIT'} ? |+ ₹ ${tx.amount}| : |- ₹ ${tx.amount}|">
+    </td>
+
+    <td th:text="${tx.timestamp}"></td>
+</tr>
+
+    </tbody>
+</table>
+
+</body>
+</html>

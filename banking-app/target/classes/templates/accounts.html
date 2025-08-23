@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Banking Portal - Accounts</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f6f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: #003366;
+            color: white;
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        .navbar h1 {
+            margin: 0;
+            font-size: 22px;
+        }
+        .navbar a {
+            color: white;
+            margin-left: 20px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .navbar a:hover {
+            text-decoration: underline;
+        }
+
+        /* Main container */
+        .container {
+            width: 90%;
+            margin: 30px auto;
+        }
+
+        h2 {
+            text-align: center;
+            color: #003366;
+            margin-bottom: 20px;
+        }
+
+        /* Account Cards */
+        .account-card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: transform 0.2s ease;
+        }
+        .account-card:hover {
+            transform: scale(1.02);
+        }
+
+        .account-card h3 {
+            margin: 0 0 10px;
+            color: #003366;
+        }
+        .account-details {
+            font-size: 15px;
+            color: #444;
+            line-height: 1.6;
+        }
+        .balance {
+            font-size: 18px;
+            font-weight: bold;
+            color: #28a745;
+        }
+
+        /* Table (for transaction-style look, optional) */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        th, td {
+            text-align: left;
+            padding: 12px;
+        }
+        th {
+            background-color: #003366;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        /* Button */
+        .btn {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 8px 14px;
+            background: #007bff;
+            color: white;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        .btn:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <div class="navbar">
+        <h1>Piggy Bank</h1>
+        <div>
+            <a href="#">Home</a>
+            <a href="#">Accounts</a>
+            <a href="#">Transactions</a>
+            <a href="#">Logout</a>
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <h2>Account Holders' List</h2>
+
+        <!-- Cards for each account -->
+        <div th:each="account : ${accounts}" class="account-card">
+            <h3 th:text="${account.accountHolderName}"></h3>
+            <div class="account-details">
+                <p><strong>Account Number:</strong> <span th:text="${account.accountNumber}"></span></p>
+                <p class="balance">₹ <span th:text="${account.balance}"></span></p>
+            </div>
+            <a th:href="@{'/account/' + ${account.accountNumber}}" class="btn">View Details</a>
+        </div>
+    </div>
+
+</body>
+</html>

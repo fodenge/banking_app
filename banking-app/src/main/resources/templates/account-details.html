@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Account Details</title>
+</head>
+<body>
+<h2>Welcome, <span th:text="${account.accountHolderName}"></span></h2>
+<p>Account Number: <span th:text="${account.accountNumber}"></span></p>
+<p>Balance: ₹<span th:text="${account.balance}"></span></p>
+</body>
+</html>

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.banking_app.dto.AccountDto;
+import com.project.banking_app.dto.CreateAccountDto;
 import com.project.banking_app.service.AccountService;
 
 @RestController
@@ -26,8 +27,8 @@ public class AccountController {
 
     //Add account REST API
     @PostMapping
-    public ResponseEntity<AccountDto> addAccount(@RequestBody AccountDto accountDto){
-        return new ResponseEntity<>(accountService.createAccount(accountDto), HttpStatus.CREATED);
+    public ResponseEntity<AccountDto> addAccount(@RequestBody CreateAccountDto account){
+        return new ResponseEntity<>(accountService.createAccount(account), HttpStatus.CREATED);
     }
 
     //Get account REST API
